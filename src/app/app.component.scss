@@ -1,0 +1,20 @@
+.app-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    .app-content {
+        background-color: gray;
+        height: inherit;
+        width: 100%;
+    }
+    
+    .app-sidebar {
+        width: 40px;
+    }
+
+    .header {
+        height: 60px;
+    }
+}

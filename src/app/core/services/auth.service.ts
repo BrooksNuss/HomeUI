@@ -3,9 +3,7 @@ import { CognitoUser } from '@aws-amplify/auth';
 import Amplify, {Auth} from 'aws-amplify';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
 	isLoggedIn: boolean = false;
 	redirectUrl: string = '';
