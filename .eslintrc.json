@@ -36,7 +36,8 @@
           }
         ],
         "no-empty-function": "warn",
-        "@angular-eslint/no-empty-lifecycle-method": "warn"
+        "@angular-eslint/no-empty-lifecycle-method": "warn",
+        "indent": ["warn", "tab"]
       }
     },
     {

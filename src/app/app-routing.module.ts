@@ -6,9 +6,9 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
 	{path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  // {path: 'feeder', component: FeederComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: '/home', pathMatch: 'full'}
+	{path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+	// {path: 'feeder', component: FeederComponent, canActivate: [AuthGuard]},
+	{path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -38,18 +38,13 @@
 		/>
 		<span>Welcome</span>
 	</div> -->
-	<mat-toolbar color="primary">
-		<button mat-icon-button>
-			<mat-icon>menu</mat-icon>
-		</button>
-		<mat-icon>home</mat-icon>
-	</mat-toolbar>
-
-	<mat-drawer-container class="app-content" autosize>
-		<mat-drawer color="accent" class="app-sidebar" mode="side" opened="true">
-			<p>wow</p>
-		</mat-drawer>
-		
-		<router-outlet></router-outlet>
-	</mat-drawer-container>
+    <app-toolbar></app-toolbar>
+	<mat-sidenav-container class="app-content" [autosize]="false">
+		<mat-sidenav [@sidebarMinimize]="sidebarOpen ? 'open' : 'closed'" color="accent" class="app-sidebar" mode="side" opened="true">
+            <app-sidebar-item itemText="Cat Feeder" iconName="pets" [expanded]="sidebarOpen"></app-sidebar-item>
+        </mat-sidenav>
+		<mat-sidenav-content [@sidebarMinimizeContent]="sidebarOpen ? 'open' : 'closed'">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+	</mat-sidenav-container>
 </div>

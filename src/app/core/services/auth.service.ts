@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CognitoUser } from '@aws-amplify/auth';
 import Amplify, {Auth} from 'aws-amplify';
 import { environment } from 'src/environments/environment';
 
@@ -37,15 +36,15 @@ export class AuthService {
 		try {
 			this.cognitoUser = await Auth.signIn(username, password);
 			switch (this.cognitoUser.challengeName) {
-				case ('NEW_PASSWORD_REQUIRED'):
-					this.currentFlow = 'resetPassword';
-					break;
-				case ('MFA_SETUP'):
-					this.currentFlow = 'qrCode';
-					break;
-				case ('SOFTWARE_TOKEN_MFA'):
-					this.currentFlow = 'mfaLogin';
-					break;
+			case ('NEW_PASSWORD_REQUIRED'):
+				this.currentFlow = 'resetPassword';
+				break;
+			case ('MFA_SETUP'):
+				this.currentFlow = 'qrCode';
+				break;
+			case ('SOFTWARE_TOKEN_MFA'):
+				this.currentFlow = 'mfaLogin';
+				break;
 			}
 		} catch (err) {
 			console.error(err);

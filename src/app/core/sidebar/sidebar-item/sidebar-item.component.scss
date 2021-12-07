@@ -1,0 +1,12 @@
+.sidebar-item-container {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .sidebar-item-text {
+        margin: 4px 0 0 10px;
+        display: block;
+        white-space: nowrap;
+    }
+}
