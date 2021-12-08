@@ -29,15 +29,15 @@ import { SidebarService } from './core/services/sidebar.service';
 export class AppComponent implements OnInit {
 	isLoggedIn: boolean = false;
 	title = 'homeUi';
-	sidebarSub: Subscription;
 	sidebarOpen = false;
 
-	constructor(private authService: AuthService, private sidebarService: SidebarService) {}
+	constructor(private authService: AuthService) {}
 
 	async ngOnInit(): Promise<void> {
 		this.isLoggedIn = await this.authService.initLoginStatus();
-		this.sidebarSub = this.sidebarService.expanded.subscribe(next => {
-			this.sidebarOpen = next;
-		})
+	}
+
+	setSidebarOpen(value: boolean): void {
+		this.sidebarOpen = value;
 	}
 }

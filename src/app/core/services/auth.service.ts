@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import Amplify, {Auth} from 'aws-amplify';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LoginFlowStage } from '../models/login-flow-stage.model';
 
 @Injectable()
 export class AuthService {
 	isLoggedIn: boolean = false;
 	redirectUrl: string = '';
-	currentFlow: 'login' | 'resetPassword' | 'qrCode' | 'mfaLogin' = "login";
+	private currentFlow$ = new BehaviorSubject<LoginFlowStage>("login");
+	currentFlow = this.currentFlow$.asObservable();
+
 	cognitoUser: any;
 	username: string = '';
 
@@ -37,13 +41,13 @@ export class AuthService {
 			this.cognitoUser = await Auth.signIn(username, password);
 			switch (this.cognitoUser.challengeName) {
 			case ('NEW_PASSWORD_REQUIRED'):
-				this.currentFlow = 'resetPassword';
+				this.currentFlow$.next('resetPassword');
 				break;
 			case ('MFA_SETUP'):
-				this.currentFlow = 'qrCode';
+				this.currentFlow$.next('qrCode');
 				break;
 			case ('SOFTWARE_TOKEN_MFA'):
-				this.currentFlow = 'mfaLogin';
+				this.currentFlow$.next('mfaLogin');
 				break;
 			}
 		} catch (err) {

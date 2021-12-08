@@ -1,0 +1,1 @@
+export type LoginFlowStage = 'login' | 'resetPassword' | 'qrCode' | 'mfaLogin';

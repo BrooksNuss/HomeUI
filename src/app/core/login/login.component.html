@@ -1,1 +1,19 @@
-<p>login works!</p>
+<div class="login-modal-container">
+    <ng-container [ngSwitch]="loginFlow">
+        <ng-template [ngSwitchCase]="'login'">
+            <app-login-start></app-login-start>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'resetPassword'">
+            <app-password-reset></app-password-reset>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'qrCode'">
+            <app-mfa-qr></app-mfa-qr>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'mfaLogin'">
+            <app-mfa-code></app-mfa-code>
+        </ng-template>
+        <ng-template *ngSwitchDefault>
+            <p>????????</p>
+        </ng-template>
+    </ng-container>
+</div>

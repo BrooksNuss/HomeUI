@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SidebarService } from '../services/sidebar.service';
 
@@ -7,12 +7,21 @@ import { SidebarService } from '../services/sidebar.service';
 	templateUrl: './sidebar.component.html',
 	styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
-	
+export class SidebarComponent implements OnInit, OnDestroy {
+	private sidebarSub: Subscription;
+	sidebarOpen = false;
+    @Output() sidebarChange = new EventEmitter();
 
-	constructor(private sidebarService: SidebarService) { }
+    constructor(private sidebarService: SidebarService) { }
 
-	ngOnInit(): void {
-		
-	}
+    ngOnInit(): void {
+    	this.sidebarSub = this.sidebarService.expanded.subscribe(next => {
+    		this.sidebarOpen = next;
+    		this.sidebarChange.emit(next);
+    	})
+    }
+
+    ngOnDestroy(): void {
+    	this.sidebarSub.unsubscribe();
+    }
 }

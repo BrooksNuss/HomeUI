@@ -16,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { SidebarItemComponent } from './core/sidebar/sidebar-item/sidebar-item.component';
 import { SidebarComponent } from './core/sidebar/sidebar.component';
 import { ToolbarComponent } from './core/toolbar/toolbar.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { LoginStartComponent } from './core/login/login-start/login-start.component';
 
 @NgModule({
 	declarations: [
@@ -27,7 +29,8 @@ import { ToolbarComponent } from './core/toolbar/toolbar.component';
 		MfaQrComponent,
 		SidebarItemComponent,
 		SidebarComponent,
-		ToolbarComponent
+		ToolbarComponent,
+		LoginStartComponent
 	],
 	imports: [
 		BrowserModule,
@@ -36,7 +39,8 @@ import { ToolbarComponent } from './core/toolbar/toolbar.component';
 		MatSidenavModule,
 		MatToolbarModule,
 		MatIconModule,
-		MatButtonModule
+		MatButtonModule,
+		MatDividerModule
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]
