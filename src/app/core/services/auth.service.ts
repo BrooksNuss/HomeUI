@@ -6,9 +6,10 @@ import { LoginFlowStage } from '../models/login-flow-stage.model';
 
 @Injectable()
 export class AuthService {
-	isLoggedIn: boolean = false;
+	private isLoggedIn$ = new BehaviorSubject<boolean>(false);
+	isLoggedIn = this.isLoggedIn$.asObservable();
 	redirectUrl: string = '';
-	private currentFlow$ = new BehaviorSubject<LoginFlowStage>("login");
+	private currentFlow$ = new BehaviorSubject<LoginFlowStage>('login');
 	currentFlow = this.currentFlow$.asObservable();
 
 	cognitoUser: any;
@@ -27,12 +28,12 @@ export class AuthService {
 		});
 		
 		try {
-			this.isLoggedIn = !!(await Auth.currentAuthenticatedUser());
+			this.isLoggedIn$.next(!!await Auth.currentAuthenticatedUser());
+			return true;
 		} catch (err) {
-			console.error(err);
-			this.isLoggedIn = false;
+			console.log(err);
 		}
-		return this.isLoggedIn;
+		return false;
 	}
 
 	async signIn(username: string, password: string): Promise<void> {
