@@ -18,6 +18,10 @@ import { SidebarComponent } from './core/sidebar/sidebar.component';
 import { ToolbarComponent } from './core/toolbar/toolbar.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { LoginStartComponent } from './core/login/login-start/login-start.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginModalComponent } from './core/login/login-modal/login-modal.component';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
 	declarations: [
@@ -30,7 +34,8 @@ import { LoginStartComponent } from './core/login/login-start/login-start.compon
 		SidebarItemComponent,
 		SidebarComponent,
 		ToolbarComponent,
-		LoginStartComponent
+		LoginStartComponent,
+		LoginModalComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -40,7 +45,10 @@ import { LoginStartComponent } from './core/login/login-start/login-start.compon
 		MatToolbarModule,
 		MatIconModule,
 		MatButtonModule,
-		MatDividerModule
+		MatDividerModule,
+		MatDialogModule,
+		MatInputModule,
+		FormsModule,
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]

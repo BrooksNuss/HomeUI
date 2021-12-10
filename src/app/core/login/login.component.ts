@@ -1,26 +1,25 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { LoginFlowStage } from '../models/login-flow-stage.model';
-import { AuthService } from '../services/auth.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LoginModalComponent } from './login-modal/login-modal.component';
 
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
-	username = '';
-	password = '';
-	loginFlowSub: Subscription;
-	loginFlow: LoginFlowStage;
+export class LoginComponent implements AfterViewInit, OnInit {
+	private dialog: MatDialogRef<LoginModalComponent>;
 
-	constructor(private authService: AuthService) {}
+	constructor(private dialogService: MatDialog) {}
 
-	ngOnInit(): void {
-		this.loginFlowSub = this.authService.currentFlow.subscribe(next => {
-			this.loginFlow = next;
-		})
+	ngOnInit(): void {}
+
+	ngAfterViewInit(): void {
+		this.dialog = this.dialogService.open(LoginModalComponent, {
+			height: '450px',
+			width: '300px',
+			disableClose: true,
+			closeOnNavigation: false
+		});
 	}
-
-	ngAfterViewInit(): void {}
 }

@@ -32,12 +32,10 @@
 <div class="app-main">
     <app-toolbar></app-toolbar>
 	<mat-sidenav-container color="accent" class="app-content" [autosize]="false">
-		<mat-sidenav color="accent" [@sidebarMinimize]="sidebarOpen ? 'open' : 'closed'" color="accent" class="app-sidebar" mode="side" opened="true">
-            <app-sidebar (sidebarChange)="setSidebarOpen($event)">
-
-            </app-sidebar>
+		<mat-sidenav *ngIf="isLoggedIn" color="accent" [@sidebarMinimize]="sidebarOpen ? 'open' : 'closed'" color="accent" class="app-sidebar" mode="side" opened="true">
+            <app-sidebar (sidebarChange)="setSidebarOpen($event)"></app-sidebar>
         </mat-sidenav>
-		<mat-sidenav-content [@sidebarMinimizeContent]="sidebarOpen ? 'open' : 'closed'">
+		<mat-sidenav-content [ngClass]="{'no-sidebar': !isLoggedIn}" [@sidebarMinimizeContent]="sidebarOpen ? 'open' : 'closed'">
             <router-outlet></router-outlet>
         </mat-sidenav-content>
 	</mat-sidenav-container>

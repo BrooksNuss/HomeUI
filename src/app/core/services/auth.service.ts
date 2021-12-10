@@ -11,9 +11,7 @@ export class AuthService {
 	redirectUrl: string = '';
 	private currentFlow$ = new BehaviorSubject<LoginFlowStage>('login');
 	currentFlow = this.currentFlow$.asObservable();
-
 	cognitoUser: any;
-	username: string = '';
 
 	constructor() {}
 
@@ -36,8 +34,7 @@ export class AuthService {
 		return false;
 	}
 
-	async signIn(username: string, password: string): Promise<void> {
-		this.username = username;
+	async signIn(username: string, password: string): Promise<any> {
 		try {
 			this.cognitoUser = await Auth.signIn(username, password);
 			switch (this.cognitoUser.challengeName) {
@@ -51,8 +48,10 @@ export class AuthService {
 				this.currentFlow$.next('mfaLogin');
 				break;
 			}
+			return null;
 		} catch (err) {
 			console.error(err);
+			return err;
 		}
 	}
 

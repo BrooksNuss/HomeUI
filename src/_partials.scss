@@ -1,0 +1,19 @@
+@import 'src/theme-colors';
+
+span[matPrefix] {
+	margin-right: 10px;
+}
+
+mat-form-field input[matInput] {
+	margin-bottom: 5px;
+}
+
+.login-btn {
+	margin-top: 10px;
+	background-color: $theme-accent-light;
+	width: 100%;
+}
+
+span.app-link {
+	cursor: pointer;
+}

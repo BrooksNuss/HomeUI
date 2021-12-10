@@ -1,3 +1,7 @@
-.login-modal-container {
-    
+@import 'src/theme-colors';
+
+.login-modal-background {
+    background-color: $theme-bg-dark;
+    height: 100%;
+    width: 100%;
 }

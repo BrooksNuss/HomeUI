@@ -1,1 +1,19 @@
-<p>login-start works!</p>
+<div class="login-container">
+	<h1 class="login-title">Login</h1>
+	<mat-form-field>
+		<mat-label>Username</mat-label>
+		<span matPrefix class="field-icon">
+			<mat-icon>person</mat-icon>
+		</span>
+		<input class="login-field" matInput type="text" name="username" [(ngModel)]="username">
+	</mat-form-field>
+	<mat-form-field>
+		<mat-label>Password</mat-label>
+		<span matPrefix class="field-icon">
+			<mat-icon>lock</mat-icon>
+		</span>
+		<input class="login-field" matInput type="password" name="password" [(ngModel)]="password">
+	</mat-form-field>
+	<button mat-raised-button class="login-btn">Login</button>
+	<span class="app-link pass-reset" (click)="resetPassword()">Forgot Password?</span>
+</div>
