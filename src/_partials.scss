@@ -17,3 +17,14 @@ mat-form-field input[matInput] {
 span.app-link {
 	cursor: pointer;
 }
+
+.center-column {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.login-modal-title {
+    margin-bottom: 40px;
+}

@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Component, Injector, OnInit } from '@angular/core';
+import { LoginModalStep } from '../abstract/LoginModalStep';
 
 @Component({
 	selector: 'app-login-start',
 	templateUrl: './login-start.component.html',
 	styleUrls: ['./login-start.component.scss']
 })
-export class LoginStartComponent implements OnInit {
+export class LoginStartComponent extends LoginModalStep implements OnInit {
 	username: string;
 	password: string;
 
-	constructor(private authService: AuthService, private router: Router) {}
+	constructor(injector: Injector) {
+		super(injector, 'login');
+	}
 
 	ngOnInit(): void {}
 
@@ -23,7 +24,6 @@ export class LoginStartComponent implements OnInit {
 	}
 
 	resetPassword(): void {
-		// this.loginStepChange.emit('resetPassword');
 		this.router.navigate([{outlets: {auth: ['password-reset']}}]);
 	}
 

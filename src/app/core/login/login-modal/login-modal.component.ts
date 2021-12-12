@@ -1,7 +1,8 @@
+import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { LoginFlowStage } from '../../models/login-flow-stage.model';
+import { LoginFlowStep } from '../../models/login-flow-step.model';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,17 +14,24 @@ export class LoginModalComponent implements OnInit, AfterViewInit {
 	username = '';
 	password = '';
 	loginFlowSub: Subscription;
-	loginFlow: LoginFlowStage;
+	loginStep: LoginFlowStep;
 
-	constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {}
+
+	constructor(private authService: AuthService, private router: Router, private location: Location) {}
 
 	ngOnInit(): void {
-		this.loginFlowSub = this.authService.currentFlow.subscribe(next => {
-			this.loginFlow = next;
+		this.loginFlowSub = this.authService.currentStep.subscribe(next => {
+			this.loginStep = next;
 		})
 	}
 
 	ngAfterViewInit(): void {
 		this.router.navigate([{outlets: {auth: ['login']}}]);
+	}
+
+	goToPreviousStep(): void {
+		if (this.loginStep !== 'login') {
+			this.location.back();
+		}
 	}
 }

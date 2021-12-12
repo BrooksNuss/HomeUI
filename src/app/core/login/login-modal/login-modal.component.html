@@ -1,3 +1,6 @@
+<button *ngIf="loginStep !== 'login'" mat-icon-button (click)="goToPreviousStep()">
+    <mat-icon>arrow_back</mat-icon>
+</button>
 <div class="modal-container">
 	<!-- <h1 class="modal-title">HomeUI</h1> -->
 	<!-- <ng-container [ngSwitch]="loginFlow">

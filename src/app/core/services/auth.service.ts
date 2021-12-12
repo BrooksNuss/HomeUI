@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import Amplify, {Auth} from 'aws-amplify';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoginFlowStage } from '../models/login-flow-stage.model';
+import { LoginFlowStep } from '../models/login-flow-step.model';
 
 @Injectable()
 export class AuthService {
 	private isLoggedIn$ = new BehaviorSubject<boolean>(false);
 	isLoggedIn = this.isLoggedIn$.asObservable();
 	redirectUrl: string = '';
-	private currentFlow$ = new BehaviorSubject<LoginFlowStage>('login');
-	currentFlow = this.currentFlow$.asObservable();
+	private currentStep$ = new BehaviorSubject<LoginFlowStep>('login');
+	currentStep = this.currentStep$.asObservable();
 	cognitoUser: any;
 
 	constructor() {}
@@ -34,18 +34,22 @@ export class AuthService {
 		return false;
 	}
 
+	setCurrentLoginStep(step: LoginFlowStep): void {
+		this.currentStep$.next(step);
+	}
+
 	async signIn(username: string, password: string): Promise<any> {
 		try {
 			this.cognitoUser = await Auth.signIn(username, password);
 			switch (this.cognitoUser.challengeName) {
 			case ('NEW_PASSWORD_REQUIRED'):
-				this.currentFlow$.next('resetPassword');
+				this.currentStep$.next('reset-password');
 				break;
 			case ('MFA_SETUP'):
-				this.currentFlow$.next('qrCode');
+				this.currentStep$.next('mfa-setup');
 				break;
 			case ('SOFTWARE_TOKEN_MFA'):
-				this.currentFlow$.next('mfaLogin');
+				this.currentStep$.next('mfa-login');
 				break;
 			}
 			return null;
@@ -53,6 +57,10 @@ export class AuthService {
 			console.error(err);
 			return err;
 		}
+	}
+
+	resetPassword(username: string): Promise<void> {
+		return Auth.forgotPassword(username);
 	}
 
 	async handleMFASetup() {
