@@ -1,0 +1,10 @@
+@use 'src/partials';
+
+:host {
+    width: 100%;
+}
+
+.center-spinner {
+    display: flex;
+    justify-content: center;
+}

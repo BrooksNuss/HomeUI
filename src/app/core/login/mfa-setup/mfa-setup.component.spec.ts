@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MfaQrComponent } from './mfa-qr.component';
+import { MfaSetupComponent } from './mfa-setup.component';
 
-describe('MfaQrComponent', () => {
-	let component: MfaQrComponent;
-	let fixture: ComponentFixture<MfaQrComponent>;
+describe('MfaSetupComponent', () => {
+	let component: MfaSetupComponent;
+	let fixture: ComponentFixture<MfaSetupComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ MfaQrComponent ]
+			declarations: [ MfaSetupComponent ]
 		})
 			.compileComponents();
 	});
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(MfaQrComponent);
+		fixture = TestBed.createComponent(MfaSetupComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

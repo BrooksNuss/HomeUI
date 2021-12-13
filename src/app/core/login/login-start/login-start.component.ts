@@ -1,4 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { LoadingButtonComponent } from 'src/app/shared/components/loading-button/loading-button.component';
 import { LoginModalStep } from '../abstract/LoginModalStep';
 
 @Component({
@@ -7,8 +9,10 @@ import { LoginModalStep } from '../abstract/LoginModalStep';
 	styleUrls: ['./login-start.component.scss']
 })
 export class LoginStartComponent extends LoginModalStep implements OnInit {
-	username: string;
-	password: string;
+	@ViewChild(LoadingButtonComponent) loginButton: LoadingButtonComponent;
+	username = new FormControl('', [Validators.minLength(1)]);
+	password = new FormControl('', [Validators.minLength(8)]);
+	invalidLogin = false;
 
 	constructor(injector: Injector) {
 		super(injector, 'login');
@@ -17,7 +21,9 @@ export class LoginStartComponent extends LoginModalStep implements OnInit {
 	ngOnInit(): void {}
 
 	async submitLogin(): Promise<void> {
-		const loginError = await this.authService.signIn(this.username, this.password);
+		this.loginButton.busy = true;
+		const loginError = await this.authService.signIn(this.username.value, this.password.value);
+		this.loginButton.busy = false;
 		if (loginError) {
 			this.handleError(loginError);
 		}
@@ -28,6 +34,8 @@ export class LoginStartComponent extends LoginModalStep implements OnInit {
 	}
 
 	handleError(err: any): void {
-
+		if (err.message === 'Incorrect username or password.') {
+			this.invalidLogin = true;
+		}
 	}
 }

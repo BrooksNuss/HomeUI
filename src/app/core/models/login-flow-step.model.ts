@@ -1,1 +1,1 @@
-export type LoginFlowStep = 'login' | 'reset-password' | 'mfa-setup' | 'mfa-login';
+export type LoginFlowStep = 'login' | 'reset-password' | 'mfa-setup' | 'mfa-login' | 'update-password';

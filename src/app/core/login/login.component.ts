@@ -16,7 +16,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
 
 	ngAfterViewInit(): void {
 		this.dialog = this.dialogService.open(LoginModalComponent, {
-			height: '450px',
+			height: '500px',
 			width: '300px',
 			disableClose: true,
 			closeOnNavigation: false

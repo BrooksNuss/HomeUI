@@ -26,5 +26,23 @@ span.app-link {
 }
 
 .login-modal-title {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+}
+
+.login-error {
+    margin-top: 10px;
+}
+
+// avoid chrome autofill color
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    transition: background-color 0s 50000s;
+    -webkit-text-fill-color: #fff !important;
+}
+
+.login-instructions {
+    text-align: center;
+    font-size: .9em;
 }

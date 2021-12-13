@@ -1,0 +1,14 @@
+<div class="center-column">
+	<h1 class="login-modal-title">Setup MFA</h1>
+	<p class="login-instructions">Scan the QR code with your authenticator app and enter the code.</p>
+	<img [src]="qrUri">
+	<mat-form-field>
+		<mat-label>MFA Code</mat-label>
+		<span matPrefix class="field-icon">
+			<mat-icon>numbers</mat-icon>
+		</span>
+		<input class="login-field" matInput type="text" name="code" [(ngModel)]="code">
+	</mat-form-field>
+	<button mat-raised-button class="login-btn" (click)="verifyCode()">Submit</button>
+	<mat-error *ngIf="!verifyCode">The MFA code you entered is invalid.</mat-error>
+</div>

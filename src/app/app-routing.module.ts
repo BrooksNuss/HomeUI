@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LoginStartComponent } from './core/login/login-start/login-start.component';
 import { LoginComponent } from './core/login/login.component';
+import { MfaCodeComponent } from './core/login/mfa-code/mfa-code.component';
+import { MfaSetupComponent as MfaSetupComponent } from './core/login/mfa-setup/mfa-setup.component';
 import { PasswordResetComponent } from './core/login/password-reset/password-reset.component';
+import { UpdatePasswordComponent } from './core/login/update-password/update-password.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -13,12 +16,15 @@ const routes: Routes = [
 	// auth sub paths
 	{path: 'login', component: LoginStartComponent, outlet: 'auth'},
 	{path: 'password-reset', component: PasswordResetComponent, outlet: 'auth'},
+	{path: 'mfa-setup', component: MfaSetupComponent, outlet: 'auth'},
+	{path: 'mfa-code', component: MfaCodeComponent, outlet: 'auth'},
+	{path: 'update-password', component: UpdatePasswordComponent, outlet: 'auth'}
 	// {path: '', redirectTo: 'login', pathMatch: 'full'},
 	// {path: 'feeder', component: FeederComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, {enableTracing: true})],
+	imports: [RouterModule.forRoot(routes, {enableTracing: false})],
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }

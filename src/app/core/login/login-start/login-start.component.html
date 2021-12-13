@@ -5,15 +5,16 @@
 		<span matPrefix class="field-icon">
 			<mat-icon>person</mat-icon>
 		</span>
-		<input class="login-field" matInput type="text" name="username" [(ngModel)]="username">
+		<input class="login-field" matInput type="text" name="username" [formControl]="username">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Password</mat-label>
 		<span matPrefix class="field-icon">
 			<mat-icon>lock</mat-icon>
 		</span>
-		<input class="login-field" matInput type="password" name="password" [(ngModel)]="password">
+		<input class="login-field" matInput type="password" name="password" [formControl]="password">
 	</mat-form-field>
-	<button mat-raised-button class="login-btn">Login</button>
+	<app-loading-button text="Login" (buttonClick)="submitLogin()" [buttonDisabled]="username.invalid && password.invalid"></app-loading-button>
+    <mat-error class="login-error" *ngIf="invalidLogin">Invalid username or password</mat-error>
 	<span class="app-link pass-reset" (click)="resetPassword()">Forgot Password?</span>
 </div>

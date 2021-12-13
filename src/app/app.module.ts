@@ -4,7 +4,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./core/login/login.component";
 import { MfaCodeComponent } from "./core/login/mfa-code/mfa-code.component";
-import { MfaQrComponent } from "./core/login/mfa-qr/mfa-qr.component";
+import { MfaSetupComponent } from "./core/login/mfa-setup/mfa-setup.component";
 import { PasswordResetComponent } from "./core/login/password-reset/password-reset.component";
 import { AuthService } from "./core/services/auth.service";
 import { HomeComponent } from "./home/home.component";
@@ -21,7 +21,11 @@ import { LoginStartComponent } from './core/login/login-start/login-start.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginModalComponent } from './core/login/login-modal/login-modal.component';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingButtonComponent } from './shared/components/loading-button/loading-button.component';
+import { UpdatePasswordComponent } from './core/login/update-password/update-password.component';
 
 @NgModule({
 	declarations: [
@@ -30,12 +34,14 @@ import { FormsModule } from "@angular/forms";
 		HomeComponent,
 		PasswordResetComponent,
 		MfaCodeComponent,
-		MfaQrComponent,
+		MfaSetupComponent,
 		SidebarItemComponent,
 		SidebarComponent,
 		ToolbarComponent,
 		LoginStartComponent,
 		LoginModalComponent,
+		LoadingButtonComponent,
+  UpdatePasswordComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -49,6 +55,9 @@ import { FormsModule } from "@angular/forms";
 		MatDialogModule,
 		MatInputModule,
 		FormsModule,
+		MatSnackBarModule,
+		MatProgressSpinnerModule,
+		ReactiveFormsModule
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]

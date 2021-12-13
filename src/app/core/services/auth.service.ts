@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import Amplify, {Auth} from 'aws-amplify';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginFlowStep } from '../models/login-flow-step.model';
+import { MfaSetupData } from '../models/MfaSetupData';
 
 @Injectable()
 export class AuthService {
@@ -12,8 +14,10 @@ export class AuthService {
 	private currentStep$ = new BehaviorSubject<LoginFlowStep>('login');
 	currentStep = this.currentStep$.asObservable();
 	cognitoUser: any;
+	username: string;
+	password: string;
 
-	constructor() {}
+	constructor(private router: Router) {}
 
 	async initLoginStatus(): Promise<boolean> {
 		Amplify.configure({
@@ -41,15 +45,17 @@ export class AuthService {
 	async signIn(username: string, password: string): Promise<any> {
 		try {
 			this.cognitoUser = await Auth.signIn(username, password);
+			this.username = username;
+			this.password = password;
 			switch (this.cognitoUser.challengeName) {
 			case ('NEW_PASSWORD_REQUIRED'):
-				this.currentStep$.next('reset-password');
+				this.router.navigate([{outlets: {auth: ['update-password']}}]);
 				break;
 			case ('MFA_SETUP'):
-				this.currentStep$.next('mfa-setup');
+				this.router.navigate([{outlets: {auth: ['mfa-setup']}}]);
 				break;
 			case ('SOFTWARE_TOKEN_MFA'):
-				this.currentStep$.next('mfa-login');
+				this.router.navigate([{outlets: {auth: ['mfa-code']}}]);
 				break;
 			}
 			return null;
@@ -59,26 +65,49 @@ export class AuthService {
 		}
 	}
 
-	resetPassword(username: string): Promise<void> {
-		return Auth.forgotPassword(username);
+	async resetPassword(username: string): Promise<void> {
+		this.username = username;
+		// need some logic here to send an email to the admin
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve();
+			}, 1000);
+		})
 	}
 
-	async handleMFASetup() {
-		// move to qr component
-		// try {
-		// 	const code = await Auth.setupTOTP(this.cognitoUser);
-		// 	const totpUri = "otpauth://totp/AWSCognito:"+ this.username + "?secret=" + code + "&issuer=HomeApp";
-		// 	qrcode.toDataURL(totpUri, (err, url) => {
-		// 		if (err) {
-		// 			console.log(err);
-		// 		} else {
-		// 			this.qrUri = url;
-		// 		}
-		// 	})
-		// 	console.log(code);
-		// 	this.currentFlow = "qrCode";
-		// } catch (err) {
-		// 	console.error(err);
-		// }
+	confirmResetPassword(code: string, password: string): Promise<string> {
+		return Auth.forgotPasswordSubmit(this.username, code, password);
+	}
+
+	async setupMfa(): Promise<MfaSetupData> {
+		const code = await Auth.setupTOTP(this.cognitoUser);
+		return await {code, username: this.username};
+	}
+
+	async verifyMfaCode(code: string): Promise<boolean> {
+		try {
+			await Auth.verifyTotpToken(this.cognitoUser, code);
+			return true;
+		} catch (err) {
+			console.error(err);
+			return false;
+		}
+	}
+
+	async updatePassword(password: string): Promise<any> {
+		try {
+			this.cognitoUser = await Auth.completeNewPassword(this.cognitoUser, password);
+			switch (this.cognitoUser.challengeName) {
+			case ('MFA_SETUP'):
+				this.router.navigate([{outlets: {auth: ['mfa-setup']}}]);
+				break;
+			case ('SOFTWARE_TOKEN_MFA'):
+				this.router.navigate([{outlets: {auth: ['mfa-code']}}]);
+				break;
+			}
+		} catch (err) {
+			console.error(err);
+			return err;
+		}
 	}
 }
