@@ -1,1 +1,13 @@
-<p>mfa-code works!</p>
+<div class="center-column">
+	<h1 class="login-modal-title">Authorize MFA</h1>
+	<p class="login-instructions">Enter the code from your authenticator app.</p>
+	<mat-form-field>
+		<mat-label>MFA Code</mat-label>
+		<span matPrefix class="field-icon">
+			<mat-icon>numbers</mat-icon>
+		</span>
+		<input class="login-field" matInput type="text" name="code" [(ngModel)]="code">
+	</mat-form-field>
+	<button mat-raised-button class="login-btn" (click)="submitCode()">Submit</button>
+	<mat-error *ngIf="!validCode">The MFA code you entered is invalid.</mat-error>
+</div>
