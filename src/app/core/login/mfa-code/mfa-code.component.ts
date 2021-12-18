@@ -18,9 +18,6 @@ export class MfaCodeComponent extends LoginModalStep implements OnInit {
 	}
 
 	async submitCode(): Promise<void> {
-		const valid = await this.authService.submitMfaChallenge(this.code);
-		if (valid) {
-			this.router.navigate(['home']);
-		}
+		this.validCode = await this.authService.submitMfaChallenge(this.code);
 	}
 }

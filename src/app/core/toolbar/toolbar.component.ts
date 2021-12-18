@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { SidebarService } from '../services/sidebar.service';
 
 @Component({
@@ -8,12 +9,16 @@ import { SidebarService } from '../services/sidebar.service';
 })
 export class ToolbarComponent implements OnInit {
 
-	constructor(private sidebarService: SidebarService) { }
+	constructor(private sidebarService: SidebarService, private authService: AuthService) { }
 
 	ngOnInit(): void {
 	}
 
 	toggleSidebar(): void {
 		this.sidebarService.toggleSidebar();
+	}
+
+	logout(): void {
+		this.authService.logout();
 	}
 }

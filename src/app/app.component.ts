@@ -34,7 +34,10 @@ export class AppComponent implements OnInit {
 	constructor(private authService: AuthService) {}
 
 	async ngOnInit(): Promise<void> {
-		this.isLoggedIn = await this.authService.initLoginStatus();
+		await this.authService.initLoginStatus();
+		this.authService.isLoggedIn.subscribe(next => {
+			this.isLoggedIn = next;
+		});
 	}
 
 	setSidebarOpen(value: boolean): void {

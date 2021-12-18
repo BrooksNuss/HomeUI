@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import Amplify, {Auth} from 'aws-amplify';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginFlowStep } from '../models/login-flow-step.model';
 import { MfaSetupData } from '../models/MfaSetupData';
 
 @Injectable()
 export class AuthService {
-	private isLoggedIn$ = new BehaviorSubject<boolean>(false);
+	private isLoggedIn$ = new ReplaySubject<boolean>(1);
 	isLoggedIn = this.isLoggedIn$.asObservable();
-	redirectUrl: string = '';
+	redirectUrl: string = 'home';
 	private currentStep$ = new BehaviorSubject<LoginFlowStep>('login');
 	currentStep = this.currentStep$.asObservable();
 	cognitoUser: any;
 	username: string;
 	password: string;
+	private isBusy$ = new BehaviorSubject<boolean>(true);
+	isBusy = this.isBusy$.asObservable();
 
 	constructor(private router: Router) {}
 
-	async initLoginStatus(): Promise<boolean> {
+	async initLoginStatus(): Promise<void> {
 		Amplify.configure({
 			Auth: {
 				region: environment.region,
@@ -30,12 +32,12 @@ export class AuthService {
 		});
 		
 		try {
-			this.isLoggedIn$.next(!!await Auth.currentAuthenticatedUser());
-			return true;
+			const loggedIn = await Auth.currentAuthenticatedUser();
+			this.isLoggedIn$.next(!!loggedIn);
 		} catch (err) {
+			this.isLoggedIn$.next(false);
 			console.log(err);
 		}
-		return false;
 	}
 
 	setCurrentLoginStep(step: LoginFlowStep): void {
@@ -86,7 +88,7 @@ export class AuthService {
 
 	async verifyMfaCode(code: string): Promise<boolean> {
 		try {
-			await Auth.verifyTotpToken(this.cognitoUser, code);
+			this.cognitoUser = await Auth.verifyTotpToken(this.cognitoUser, code);
 			return true;
 		} catch (err) {
 			console.error(err);
@@ -109,5 +111,24 @@ export class AuthService {
 			console.error(err);
 			return err;
 		}
+	}
+
+	async submitMfaChallenge(code: string): Promise<boolean> {
+		try {
+			await Auth.confirmSignIn(this.cognitoUser, code, 'SOFTWARE_TOKEN_MFA');
+			this.isLoggedIn$.next(true);
+			return true;
+		} catch (err) {
+			console.error(err);
+			return false;
+		}
+	}
+
+	setBusy(busy: boolean): void {
+		this.isBusy$.next(busy);
+	}
+
+	logout(): void {
+		Auth.signOut();
 	}
 }
