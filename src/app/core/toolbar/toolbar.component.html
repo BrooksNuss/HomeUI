@@ -1,7 +1,10 @@
 <mat-toolbar color="accent">
-    <button mat-icon-button (click)="toggleSidebar()">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <mat-icon>home</mat-icon>
-    <button mat-raised-button (click)="logout()">Logout</button>
+    <div class="toolbar-content">
+        <button mat-icon-button (click)="toggleSidebar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <!-- <mat-icon>home</mat-icon>
+        <button mat-raised-button (click)="logout()">Logout</button> -->
+        <app-profile-button></app-profile-button>
+    </div>
 </mat-toolbar>

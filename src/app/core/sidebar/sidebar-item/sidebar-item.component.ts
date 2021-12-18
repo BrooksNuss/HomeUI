@@ -1,5 +1,6 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
+import { SidebarItem } from '../../models/sidebar-item.model';
 
 @Component({
 	selector: 'app-sidebar-item',
@@ -27,8 +28,7 @@ export class SidebarItemComponent implements OnInit {
 	get expanded(): boolean {
 		return this._expanded;
 	}
-	@Input() itemText = '';
-	@Input() iconName = '';
+	@Input() item: SidebarItem;
 
 	constructor() { }
 

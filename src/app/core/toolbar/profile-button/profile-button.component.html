@@ -1,0 +1,8 @@
+<button [matMenuTriggerFor]="menu" mat-fab class="profile-button">
+    <mat-icon>person</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>App Settings</button>
+    <button mat-menu-item>User Settings</button>
+    <button mat-menu-item (click)="logout()">Sign Out</button>
+</mat-menu>

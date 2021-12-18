@@ -1,4 +1,5 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { LoadingButtonComponent } from 'src/app/shared/components/loading-button/loading-button.component';
 import { LoginModalStep } from '../abstract/LoginModalStep';
 
 @Component({
@@ -7,17 +8,20 @@ import { LoginModalStep } from '../abstract/LoginModalStep';
 	styleUrls: ['./mfa-code.component.scss']
 })
 export class MfaCodeComponent extends LoginModalStep implements OnInit {
-	code = '';
-	validCode = true;
+    @ViewChild(LoadingButtonComponent) loginButton: LoadingButtonComponent;
+    code = '';
+    validCode = true;
 
-	constructor(injector: Injector) {
-		super(injector, 'mfa-login');
-	}
+    constructor(injector: Injector) {
+    	super(injector, 'mfa-login');
+    }
 
-	ngOnInit(): void {
-	}
+    ngOnInit(): void {
+    }
 
-	async submitCode(): Promise<void> {
-		this.validCode = await this.authService.submitMfaChallenge(this.code);
-	}
+    async submitCode(): Promise<void> {
+    	this.loginButton.busy = true;
+    	this.validCode = await this.authService.submitMfaChallenge(this.code);
+    	this.loginButton.busy = false;
+    }
 }

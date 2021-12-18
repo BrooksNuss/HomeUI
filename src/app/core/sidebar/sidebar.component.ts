@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SidebarItem } from '../models/sidebar-item.model';
 import { SidebarService } from '../services/sidebar.service';
 
 @Component({
@@ -11,8 +13,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
 	private sidebarSub: Subscription;
 	sidebarOpen = false;
     @Output() sidebarChange = new EventEmitter();
+    feederItem: SidebarItem = {
+    	itemText: 'Cat Feeder',
+    	iconName: 'pets',
+    	action: () => {
+    		this.router.navigate(['/home/feeder']);
+    	}
+    }
 
-    constructor(private sidebarService: SidebarService) { }
+    constructor(private sidebarService: SidebarService, private router: Router) { }
 
     ngOnInit(): void {
     	this.sidebarSub = this.sidebarService.expanded.subscribe(next => {

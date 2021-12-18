@@ -5,6 +5,7 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginFlowStep } from '../models/login-flow-step.model';
 import { MfaSetupData } from '../models/MfaSetupData';
+import { ToastService } from './toast.service';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
 	private isBusy$ = new BehaviorSubject<boolean>(true);
 	isBusy = this.isBusy$.asObservable();
 
-	constructor(private router: Router) {}
+	constructor(private router: Router, private toastService: ToastService) {}
 
 	async initLoginStatus(): Promise<void> {
 		Amplify.configure({
@@ -70,6 +71,7 @@ export class AuthService {
 	async resetPassword(username: string): Promise<void> {
 		this.username = username;
 		// need some logic here to send an email to the admin
+		this.toastService.showToastMessage('Your password reset request has been sent to your administrator.', undefined, 5000);
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				resolve();
@@ -77,9 +79,9 @@ export class AuthService {
 		})
 	}
 
-	confirmResetPassword(code: string, password: string): Promise<string> {
-		return Auth.forgotPasswordSubmit(this.username, code, password);
-	}
+	// confirmResetPassword(code: string, password: string): Promise<string> {
+	// 	return Auth.forgotPasswordSubmit(this.username, code, password);
+	// }
 
 	async setupMfa(): Promise<MfaSetupData> {
 		const code = await Auth.setupTOTP(this.cognitoUser);
@@ -117,6 +119,7 @@ export class AuthService {
 		try {
 			await Auth.confirmSignIn(this.cognitoUser, code, 'SOFTWARE_TOKEN_MFA');
 			this.isLoggedIn$.next(true);
+			this.toastService.showToastMessage('Logged in', undefined, 3000);
 			return true;
 		} catch (err) {
 			console.error(err);
@@ -128,7 +131,14 @@ export class AuthService {
 		this.isBusy$.next(busy);
 	}
 
-	logout(): void {
-		Auth.signOut();
+	async logout(): Promise<void> {
+		try {
+			await Auth.signOut();
+			this.isLoggedIn$.next(false);
+			this.toastService.showToastMessage('Logged out', undefined, 3000);
+			this.router.navigate(['auth']);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 }

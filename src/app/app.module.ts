@@ -26,6 +26,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingButtonComponent } from './shared/components/loading-button/loading-button.component';
 import { UpdatePasswordComponent } from './core/login/update-password/update-password.component';
+import { ProfileButtonComponent } from './core/toolbar/profile-button/profile-button.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { FeederComponent } from './home/feeder/feeder.component';
+import { FeederListComponent } from './home/feeder/feeder-list/feeder-list.component';
+import { FeederDetailComponent } from './home/feeder/feeder-detail/feeder-detail.component';
+import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-list-item.component';
 
 @NgModule({
 	declarations: [
@@ -41,7 +47,12 @@ import { UpdatePasswordComponent } from './core/login/update-password/update-pas
 		LoginStartComponent,
 		LoginModalComponent,
 		LoadingButtonComponent,
-  UpdatePasswordComponent,
+		UpdatePasswordComponent,
+		ProfileButtonComponent,
+  FeederComponent,
+  FeederListComponent,
+  FeederDetailComponent,
+  FeederListItemComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -57,7 +68,8 @@ import { UpdatePasswordComponent } from './core/login/update-password/update-pas
 		FormsModule,
 		MatSnackBarModule,
 		MatProgressSpinnerModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		MatMenuModule
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]

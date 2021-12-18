@@ -7,11 +7,14 @@ import { MfaCodeComponent } from './core/login/mfa-code/mfa-code.component';
 import { MfaSetupComponent as MfaSetupComponent } from './core/login/mfa-setup/mfa-setup.component';
 import { PasswordResetComponent } from './core/login/password-reset/password-reset.component';
 import { UpdatePasswordComponent } from './core/login/update-password/update-password.component';
+import { FeederComponent } from './home/feeder/feeder.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
 	{path: 'auth', component: LoginComponent},
-	{path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+	{path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
+		{path: 'feeder', component: FeederComponent}
+	]},
 	{path: '**', redirectTo: '/home', pathMatch: 'full'},
 	// auth sub paths
 	{path: 'login', component: LoginStartComponent, outlet: 'auth'},
@@ -24,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, {enableTracing: false})],
+	imports: [RouterModule.forRoot(routes, {enableTracing: true})],
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }

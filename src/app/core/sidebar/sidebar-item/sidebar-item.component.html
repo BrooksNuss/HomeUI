@@ -1,4 +1,4 @@
-<div class="sidebar-item-container">
-    <mat-icon class="sidebar-item-icon">{{iconName}}</mat-icon>
-    <span @sidebarOpen *ngIf="expanded" class="sidebar-item-text">{{itemText}}</span>
+<div class="sidebar-item-container" (click)="item.action()">
+    <mat-icon class="sidebar-item-icon">{{item.iconName}}</mat-icon>
+    <span @sidebarOpen *ngIf="expanded" class="sidebar-item-text">{{item.itemText}}</span>
 </div>

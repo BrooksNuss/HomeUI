@@ -24,7 +24,6 @@ export class PasswordResetComponent extends LoginModalStep implements OnInit {
     		this.submitButton.busy = true;
     		this.result = await this.authService.resetPassword(this.username);
     		this.submitButton.busy = false;
-    		this.toastService.showToastMessage('Your password reset request has been sent to your administrator.', undefined, 5000);
     		await this.router.navigate([{outlets: {auth: ['login']}}]);
     	} catch (err) {
     		console.error(err);
