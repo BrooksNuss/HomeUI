@@ -1,4 +1,4 @@
 <div class="feeder-container">
-    <app-feeder-list></app-feeder-list>
-    <app-feeder-detail></app-feeder-detail>
+    <app-feeder-list [feederItems]="feederInfos" (selectedItem)="selectItem($event)"></app-feeder-list>
+    <app-feeder-detail [selectedItem]="selectedItem"></app-feeder-detail>
 </div>

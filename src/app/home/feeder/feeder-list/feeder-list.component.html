@@ -1,1 +1,5 @@
-<p>feeder-list works!</p>
+<div class="list-container">
+    <div class="feeder-item" *ngFor="let item of feederItems" >
+        <app-feeder-list-item [info]="item" (selectedItem)="selectItem($event)"></app-feeder-list-item>
+    </div>
+</div>

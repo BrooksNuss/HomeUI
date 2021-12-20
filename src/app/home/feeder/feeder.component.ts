@@ -7,20 +7,72 @@ import { FeederInfo } from '../models/FeederInfo';
 	styleUrls: ['./feeder.component.scss']
 })
 export class FeederComponent implements OnInit {
-	feederInfos: FeederInfo[] = [
-		{
-			name: 'Main Feeder',
-			status: 'INACTIVE'
-		},
-		{
-			name: 'Treat Feeder',
-			status: 'INACTIVE'
-		}
-	]
+	feederInfos: FeederInfo[] = [];
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Main Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// 	{
+	// 		name: 'Treat Feeder',
+	// 		status: 'INACTIVE'
+	// 	},
+	// ];
+	selectedItem: FeederInfo;
 
 	constructor() { }
 
 	ngOnInit(): void {
 	}
 
+	selectItem(item: FeederInfo): void {
+		this.selectedItem = item;
+	}
 }

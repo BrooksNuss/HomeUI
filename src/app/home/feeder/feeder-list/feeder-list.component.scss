@@ -1,0 +1,16 @@
+@import 'src/theme-colors';
+
+.list-container {
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+	height: 60vh;
+	background-color: $theme-bg;
+	padding: 5px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	.feeder-item:not(:first-child) {
+		margin-top: 5px;
+	}
+}

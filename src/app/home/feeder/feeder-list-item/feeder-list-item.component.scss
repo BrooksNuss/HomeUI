@@ -1,0 +1,34 @@
+@import 'src/theme-colors';
+
+.card {
+	background-color: $theme-bg-light;
+	cursor: pointer;
+
+	.item-status {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		
+		.status-icon {
+			border-radius: 16px;
+			width: 16px;
+			height: 16px;
+			
+			&.ACTIVE {
+				background-color: green;
+			}
+			
+			&.INACTIVE {
+				background-color: red;
+			}
+		}
+		
+		.status-text {
+			margin-left: 5px;
+		}
+	}
+
+	.header {
+		justify-content: space-between;
+	}
+}

@@ -32,6 +32,7 @@ import { FeederComponent } from './home/feeder/feeder.component';
 import { FeederListComponent } from './home/feeder/feeder-list/feeder-list.component';
 import { FeederDetailComponent } from './home/feeder/feeder-detail/feeder-detail.component';
 import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-list-item.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [
@@ -49,10 +50,10 @@ import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-l
 		LoadingButtonComponent,
 		UpdatePasswordComponent,
 		ProfileButtonComponent,
-  FeederComponent,
-  FeederListComponent,
-  FeederDetailComponent,
-  FeederListItemComponent,
+		FeederComponent,
+		FeederListComponent,
+		FeederDetailComponent,
+		FeederListItemComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -69,7 +70,8 @@ import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-l
 		MatSnackBarModule,
 		MatProgressSpinnerModule,
 		ReactiveFormsModule,
-		MatMenuModule
+		MatMenuModule,
+		MatCardModule
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]

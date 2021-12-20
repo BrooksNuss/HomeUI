@@ -1,1 +1,9 @@
-<p>feeder-list-item works!</p>
+<mat-card class="card" (click)="selectItem()">
+    <mat-card-header class="header">
+        <mat-card-title>{{info.name}}</mat-card-title>
+        <div class="item-status">
+            <div [class]="info.status" [class.status-icon]="true"></div>
+            <span class="status-text">{{info.status}}</span>
+        </div>
+    </mat-card-header>
+</mat-card>
