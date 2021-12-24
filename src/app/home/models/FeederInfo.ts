@@ -1,4 +1,5 @@
 export interface FeederInfo {
+    id: string;
     name: string;
     status: 'ACTIVE' | 'INACTIVE';
     lastActive: number;
