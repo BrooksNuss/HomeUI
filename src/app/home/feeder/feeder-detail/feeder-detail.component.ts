@@ -8,10 +8,19 @@ import { FeederInfo } from '../../models/FeederInfo';
 })
 export class FeederDetailComponent implements OnInit {
     @Input() selectedItem: FeederInfo;
+    disableFeed = false;
+    disableSkip = false;
 
     constructor() { }
 
     ngOnInit(): void {
     }
 
+    activateFeeder() {
+
+    }
+
+    skipFeeder() {
+
+    }
 }

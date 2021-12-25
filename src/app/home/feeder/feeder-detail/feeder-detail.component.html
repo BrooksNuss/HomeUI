@@ -1,1 +1,27 @@
-<p>feeder-detail works!</p>
+<div class="feeder-detail" *ngIf="selectedItem">
+	<h1>{{selectedItem.name}}</h1>
+	<div class="detail-container">
+		<div class="detail-column">
+			<app-loading-button class="detail-btn" (buttonClick)="activateFeeder()" [buttonDisabled]="disableFeed" [text]="'Activate'"></app-loading-button>
+			<div class="detail-text">
+				<h3 class="detail-text-title">Last active</h3>
+				<h4 class="detail-text-value">{{selectedItem.lastActive}}</h4>
+			</div>
+			<div class="detail-text">
+				<h3 class="detail-text-title">Estimated food remaining</h3>
+				<h4 class="detail-text-value">{{selectedItem.estRemainingFood}}</h4>
+			</div>
+		</div>
+		<div class="detail-column">
+			<app-loading-button class="detail-btn" (buttonClick)="skipFeeder()" [buttonDisabled]="disableSkip" [text]="'Reset timer'"></app-loading-button>
+			<div class="detail-text">
+				<h3 class="detail-text-title">Time to next feeding</h3>
+				<h4 class="detail-text-value">{{selectedItem.nextActive}}</h4>
+			</div>
+			<div class="detail-text">
+				<h3 class="detail-text-title">Estimated activations remaining</h3>
+				<h4 class="detail-text-value">{{selectedItem.estRemainingFeedings}}</h4>
+			</div>
+		</div>
+	</div>
+</div>
