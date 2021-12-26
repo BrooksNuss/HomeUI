@@ -12,7 +12,7 @@ export class FeederService {
 	constructor(private httpClient: HttpClient) { }
 
 	getFeederList(): Observable<FeederInfo[]> {
-		return this.httpClient.get<FeederInfo[]>(environment.feederGateway + 'listInfo');
+		return this.httpClient.get<FeederInfo[]>(environment.feederGateway + 'list-info');
 	}
 
 	activateFeeder(id: string): Observable<FeederInfo> {
@@ -24,6 +24,6 @@ export class FeederService {
 	}
 
 	toggleEnabled(id: string): Observable<FeederInfo> {
-		return this.httpClient.get<FeederInfo>(environment.feederGateway + 'toggleEnabled/' + id);
+		return this.httpClient.get<FeederInfo>(environment.feederGateway + 'toggle-enabled/' + id);
 	}
 }

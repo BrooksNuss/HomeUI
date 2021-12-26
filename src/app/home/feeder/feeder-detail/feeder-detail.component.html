@@ -5,18 +5,18 @@
 			<app-loading-button class="detail-btn" (buttonClick)="activateFeeder()" [buttonDisabled]="disableFeed" [text]="'Activate'"></app-loading-button>
 			<div class="detail-text">
 				<h3 class="detail-text-title">Last active</h3>
-				<h4 class="detail-text-value">{{selectedItem.lastActive}}</h4>
+				<h4 class="detail-text-value">{{selectedItem.lastActive | date:'MMM d, h:mm a'}}</h4>
 			</div>
 			<div class="detail-text">
 				<h3 class="detail-text-title">Estimated food remaining</h3>
-				<h4 class="detail-text-value">{{selectedItem.estRemainingFood}}</h4>
+				<h4 class="detail-text-value">{{selectedItem.estRemainingFood}}%</h4>
 			</div>
 		</div>
 		<div class="detail-column">
 			<app-loading-button class="detail-btn" (buttonClick)="skipFeeder()" [buttonDisabled]="disableSkip" [text]="'Reset timer'"></app-loading-button>
 			<div class="detail-text">
-				<h3 class="detail-text-title">Time to next feeding</h3>
-				<h4 class="detail-text-value">{{selectedItem.nextActive}}</h4>
+				<h3 class="detail-text-title">Next activation</h3>
+				<h4 class="detail-text-value">{{selectedItem.nextActive | date:'MMM d, h:mm a'}}</h4>
 			</div>
 			<div class="detail-text">
 				<h3 class="detail-text-title">Estimated activations remaining</h3>
