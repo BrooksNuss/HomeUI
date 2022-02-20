@@ -33,6 +33,7 @@ import { FeederListComponent } from './home/feeder/feeder-list/feeder-list.compo
 import { FeederDetailComponent } from './home/feeder/feeder-detail/feeder-detail.component';
 import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-list-item.component';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
 	declarations: [
@@ -71,7 +72,8 @@ import { MatCardModule } from '@angular/material/card';
 		MatProgressSpinnerModule,
 		ReactiveFormsModule,
 		MatMenuModule,
-		MatCardModule
+		MatCardModule,
+		HttpClientModule
 	],
 	providers: [AuthService],
 	bootstrap: [AppComponent]

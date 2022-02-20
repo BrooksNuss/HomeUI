@@ -8,20 +8,28 @@ import { FeederService } from '../../services/feeder.service';
 	styleUrls: ['./feeder-detail.component.scss']
 })
 export class FeederDetailComponent implements OnInit {
-    @Input() selectedItem: FeederInfo;
-    disableFeed = false;
-    disableSkip = false;
+	@Input() selectedItem: FeederInfo;
+	disableFeed = false;
+	disableSkip = false;
 
-    constructor(private feederService: FeederService) { }
+	constructor(private feederService: FeederService) { }
 
-    ngOnInit(): void {
-    }
+	ngOnInit(): void {
+		console.log(this.selectedItem);
+	}
 
-    activateFeeder() {
-    	this.feederService.activateFeeder(this.selectedItem.id);
-    }
+	activateFeeder() {
+		// this.feederService.activateFeeder(this.selectedItem.id).subscribe(res => {
+		// 	console.log(res);
+		// });
+		this.feederService.test().subscribe(res => {
+			console.log(res);
+		})
+	}
 
-    skipFeeder() {
-    	this.feederService.skipNextFeeding(this.selectedItem.id);
-    }
+	skipFeeder() {
+		this.feederService.skipNextFeeding(this.selectedItem.id).subscribe(res => {
+			console.log(res);
+		});
+	}
 }

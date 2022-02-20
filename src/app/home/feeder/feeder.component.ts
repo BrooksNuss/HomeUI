@@ -9,24 +9,24 @@ import { FeederInfo } from '../models/FeederInfo';
 export class FeederComponent implements OnInit {
 	feederInfos: FeederInfo[] = [
 		{
-			name: 'Main Feeder',
-			status: 'INACTIVE',
-			id: 'abc123',
-			lastActive: '2021-12-26T21:04:52.728Z',
-			nextActive: '2021-12-27T3:04:52.728Z',
-			interval: '12:00:00',
-			estRemainingFood: 50,
-			estRemainingFeedings: 5
+			"id": "mainFeeder",
+			"lastActive": "1645344276283",
+			"interval": "12:00:00",
+			"estRemainingFood": 50,
+			"status": "INACTIVE",
+			"estRemainingFeedings": 5,
+			"name": "Main Feeder",
+			"nextActive": "1645344276283"
 		},
 		{
-			name: 'Treats Feeder',
-			status: 'INACTIVE',
-			id: 'treatfeeder',
-			lastActive: '2021-12-27T3:04:52.728Z',
-			nextActive: '2021-12-27T3:04:52.728Z',
-			interval: '12:00:00',
-			estRemainingFood: 80,
-			estRemainingFeedings: 16
+			"id": "treatFeeder",
+			"lastActive": "1645344276283",
+			"interval": "12:00:00",
+			"estRemainingFood": 80,
+			"status": "INACTIVE",
+			"estRemainingFeedings": 16,
+			"name": "Treats Feeder",
+			"nextActive": "1645344276283"
 		},
 	];
 	selectedItem: FeederInfo;

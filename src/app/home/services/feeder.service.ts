@@ -16,14 +16,18 @@ export class FeederService {
 	}
 
 	activateFeeder(id: string): Observable<FeederInfo> {
-		return this.httpClient.get<FeederInfo>(environment.feederGateway + 'activate/' + id);
+		return this.httpClient.post<FeederInfo>(environment.feederGateway + 'activate/' + id, {});
 	}
 
 	skipNextFeeding(id: string): Observable<FeederInfo> {
-		return this.httpClient.get<FeederInfo>(environment.feederGateway + 'skip/' + id);
+		return this.httpClient.post<FeederInfo>(environment.feederGateway + 'skip/' + id, {});
 	}
 
 	toggleEnabled(id: string): Observable<FeederInfo> {
-		return this.httpClient.get<FeederInfo>(environment.feederGateway + 'toggle-enabled/' + id);
+		return this.httpClient.post<FeederInfo>(environment.feederGateway + 'toggle-enabled/' + id, {});
+	}
+
+	test(): Observable<any> {
+		return this.httpClient.get('https://google.com');
 	}
 }
