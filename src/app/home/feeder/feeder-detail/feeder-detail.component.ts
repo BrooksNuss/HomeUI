@@ -19,12 +19,9 @@ export class FeederDetailComponent implements OnInit {
 	}
 
 	activateFeeder() {
-		// this.feederService.activateFeeder(this.selectedItem.id).subscribe(res => {
-		// 	console.log(res);
-		// });
-		this.feederService.test().subscribe(res => {
+		this.feederService.activateFeeder(this.selectedItem.id).subscribe(res => {
 			console.log(res);
-		})
+		});
 	}
 
 	skipFeeder() {

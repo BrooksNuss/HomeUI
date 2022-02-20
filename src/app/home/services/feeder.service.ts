@@ -26,8 +26,4 @@ export class FeederService {
 	toggleEnabled(id: string): Observable<FeederInfo> {
 		return this.httpClient.post<FeederInfo>(environment.feederGateway + 'toggle-enabled/' + id, {});
 	}
-
-	test(): Observable<any> {
-		return this.httpClient.get('https://google.com');
-	}
 }

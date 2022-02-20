@@ -33,7 +33,8 @@ import { FeederListComponent } from './home/feeder/feeder-list/feeder-list.compo
 import { FeederDetailComponent } from './home/feeder/feeder-detail/feeder-detail.component';
 import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-list-item.component';
 import { MatCardModule } from '@angular/material/card';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
 
 @NgModule({
 	declarations: [
@@ -75,7 +76,14 @@ import { HttpClientModule } from "@angular/common/http";
 		MatCardModule,
 		HttpClientModule
 	],
-	providers: [AuthService],
+	providers: [
+		AuthService,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true
+		}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

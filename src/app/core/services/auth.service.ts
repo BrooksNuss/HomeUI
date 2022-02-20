@@ -141,4 +141,9 @@ export class AuthService {
 			console.error(err);
 		}
 	}
+
+	async getAuthToken(): Promise<string> {
+		const user = await Auth.currentAuthenticatedUser();
+		return user.signInUserSession.idToken.jwtToken;
+	}
 }
