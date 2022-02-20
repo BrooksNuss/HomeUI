@@ -1,5 +1,9 @@
 @use 'src/partials';
 
+:host {
+	width: 30vw;
+}
+
 .feeder-detail {
     width: 30vw;
     height: 50vh;
