@@ -7,7 +7,7 @@
 		<span matPrefix class="field-icon">
 			<mat-icon>numbers</mat-icon>
 		</span>
-		<input autocomplete="off" class="login-field" matInput type="text" name="code" [(ngModel)]="code">
+		<input autocomplete="off" class="login-field" matInput type="text" name="code" [(ngModel)]="code"  (keydown.enter)="verifyCode()">
 	</mat-form-field>
 	<button mat-raised-button class="login-btn" (click)="verifyCode()">Submit</button>
 	<mat-error *ngIf="!verifyCode">The MFA code you entered is invalid.</mat-error>

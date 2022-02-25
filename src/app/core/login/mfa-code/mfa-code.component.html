@@ -6,7 +6,7 @@
 		<span matPrefix class="field-icon">
 			<mat-icon>numbers</mat-icon>
 		</span>
-		<input autocomplete="off" class="login-field" matInput type="text" name="code" [(ngModel)]="code">
+		<input autocomplete="off" class="login-field" matInput type="text" name="code" [(ngModel)]="code"  (keydown.enter)="submitCode()">
 	</mat-form-field>
     <app-loading-button (buttonClick)="submitCode()" [buttonDisabled]="code.length < 6" text="Submit"></app-loading-button>
 	<mat-error *ngIf="!validCode">The MFA code you entered is invalid.</mat-error>
