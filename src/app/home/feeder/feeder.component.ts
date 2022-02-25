@@ -13,7 +13,7 @@ export class FeederComponent implements OnInit {
 			"lastActive": "1645344276283",
 			"interval": "12:00:00",
 			"estRemainingFood": 50,
-			"status": "INACTIVE",
+			"status": "OFFLINE",
 			"estRemainingFeedings": 5,
 			"name": "Main Feeder",
 			"nextActive": "1645344276283"
@@ -23,7 +23,7 @@ export class FeederComponent implements OnInit {
 			"lastActive": "1645344276283",
 			"interval": "12:00:00",
 			"estRemainingFood": 80,
-			"status": "INACTIVE",
+			"status": "OFFLINE",
 			"estRemainingFeedings": 16,
 			"name": "Treats Feeder",
 			"nextActive": "1645344276283"

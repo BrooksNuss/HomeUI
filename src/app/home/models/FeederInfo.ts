@@ -1,7 +1,7 @@
 export interface FeederInfo {
     id: string;
     name: string;
-    status: 'ACTIVE' | 'INACTIVE';
+    status: 'ONLINE' | 'OFFLINE';
     lastActive: string;
     nextActive: string;
     interval: string;
