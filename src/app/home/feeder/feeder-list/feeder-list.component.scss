@@ -3,8 +3,10 @@
 .list-container {
 	display: flex;
 	flex-direction: column;
+	min-width: 240px;
 	width: 20vw;
-	height: 60vh;
+	min-height: 60vh;
+	height: 100%;
 	background-color: $theme-bg;
 	padding: 5px;
 	overflow-x: hidden;
