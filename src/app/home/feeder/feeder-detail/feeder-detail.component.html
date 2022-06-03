@@ -1,10 +1,7 @@
-<div class="feeder-detail" *ngIf="selectedItem">
-	<h1>{{selectedItem.name}}</h1>
-	<div class="detail-container">
-		<div class="detail-buttons">
-			<app-loading-button class="detail-btn" (buttonClick)="activateFeeder()" [buttonDisabled]="disableFeed" [text]="'Activate'"></app-loading-button>
-			<app-loading-button class="detail-btn" (buttonClick)="skipFeeder()" [buttonDisabled]="disableSkip" [text]="'Reset timer'"></app-loading-button>
-		</div>
+<mat-card class="feeder-detail" *ngIf="selectedItem">
+	<mat-card-title>{{selectedItem.name}}</mat-card-title>
+	<mat-card-subtitle>{{selectedItem.description}}</mat-card-subtitle>
+	<mat-card-content class="detail-container">
 		<div class="detail-text">
 			<h3 class="detail-text-title">Last active</h3>
 			<h4 class="detail-text-value">{{selectedItem.lastActive | date:'MMM d, h:mm a'}}</h4>
@@ -21,5 +18,17 @@
 			<h3 class="detail-text-title">Activations remaining</h3>
 			<h4 class="detail-text-value">~{{selectedItem.estRemainingFeedings}}</h4>
 		</div>
-	</div>
-</div>
+		<div class="detail-text">
+			<h3 class="detail-text-title">Activation interval</h3>
+			<h4 class="detail-text-value">{{selectedItem.interval}}</h4>
+		</div>
+		<div class="detail-buttons">
+			<app-loading-button class="detail-btn" (buttonClick)="activateFeeder()" [buttonDisabled]="disableFeed" [text]="'Activate'"></app-loading-button>
+			<app-loading-button class="detail-btn" (buttonClick)="skipFeeder()" [buttonDisabled]="disableSkip" [text]="'Reset timer'"></app-loading-button>
+		</div>
+		<div class="detail-buttons">
+			<app-loading-button class="detail-btn" (buttonClick)="editFoodLevel()" [buttonDisabled]="disableFoodEdit" [text]="'Edit food level'"></app-loading-button>
+			<app-loading-button class="detail-btn" (buttonClick)="editInterval()" [buttonDisabled]="disableIntervalEdit" [text]="'Edit activation interval'"></app-loading-button>
+		</div>
+	</mat-card-content>
+</mat-card>

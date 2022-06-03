@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FeederInfo } from '../models/FeederInfo';
+import { FeederUpdateRequest } from '../models/FeederUpdateRequest';
 
 @Injectable({
 	providedIn: 'root'
@@ -25,5 +26,9 @@ export class FeederService {
 
 	toggleEnabled(id: string): Observable<FeederInfo> {
 		return this.httpClient.post<FeederInfo>(environment.feederGateway + 'toggle-enabled/' + id, {});
+	}
+
+	updateFeeder(id: string, updates: FeederUpdateRequest): Observable<FeederInfo> {
+		return this.httpClient.post<FeederInfo>(environment.feederGateway + 'update/' + id, updates);
 	}
 }
