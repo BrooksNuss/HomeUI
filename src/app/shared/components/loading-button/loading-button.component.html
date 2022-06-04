@@ -1,4 +1,4 @@
-<button mat-raised-button class="login-btn center-spinner" [ngClass]="{customClass}" (click)="onClick()" [disabled]="buttonDisabled || busy">
+<button mat-raised-button [class.less-top-margin]="lessTopMargin" class="login-btn center-spinner" [ngClass]="{customClass}" (click)="onClick()" [disabled]="buttonDisabled || busy">
     <mat-spinner *ngIf="busy else showText" diameter="36"></mat-spinner>
     <ng-template #showText>{{text}}</ng-template>
 </button>

@@ -33,6 +33,27 @@
 				width: 40%;
 			}
 		}
+
+		.update-field {
+			background-color: $theme-bg;
+			box-shadow: none;
+
+			.expansion-header {
+				height: 0px;
+			}
+
+			.time-input-container {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				
+				.time-input {
+					width: 30px;
+					margin: 0px 10px;
+				}
+			}
+		}
 		
 		.detail-text {
 			width: 100%;

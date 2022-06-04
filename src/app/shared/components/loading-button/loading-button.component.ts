@@ -10,6 +10,7 @@ export class LoadingButtonComponent implements OnInit {
 	@Input() visible = true;
 	@Input() text = '';
 	@Input() customClass = '';
+	@Input() lessTopMargin = false;
 	@Output() buttonClick = new EventEmitter();
 	busy = false;
 

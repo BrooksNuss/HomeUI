@@ -12,23 +12,51 @@
 		</div>
 		<div class="detail-text">
 			<h3 class="detail-text-title">Food remaining</h3>
-			<h4 class="detail-text-value">~{{selectedItem.estRemainingFood}}%</h4>
+			<h4 class="detail-text-value">{{(selectedItem.estRemainingFood <= 0 ? '' : '~') + selectedItem.estRemainingFood}}%</h4>
 		</div>
 		<div class="detail-text">
 			<h3 class="detail-text-title">Activations remaining</h3>
-			<h4 class="detail-text-value">~{{selectedItem.estRemainingFeedings}}</h4>
+			<h4 class="detail-text-value">{{(selectedItem.estRemainingFood <= 0 ? '' : '~') + selectedItem.estRemainingFeedings}}</h4>
 		</div>
 		<div class="detail-text">
 			<h3 class="detail-text-title">Activation interval</h3>
 			<h4 class="detail-text-value">{{selectedItem.interval}}</h4>
 		</div>
 		<div class="detail-buttons">
-			<app-loading-button class="detail-btn" (buttonClick)="activateFeeder()" [buttonDisabled]="disableFeed" [text]="'Activate'"></app-loading-button>
+			<app-loading-button [buttonDisabled]="selectedItem.estRemainingFood <= 0 || disableFeed" class="detail-btn" (buttonClick)="activateFeeder()" [text]="'Activate'"></app-loading-button>
 			<app-loading-button class="detail-btn" (buttonClick)="skipFeeder()" [buttonDisabled]="disableSkip" [text]="'Reset timer'"></app-loading-button>
 		</div>
 		<div class="detail-buttons">
-			<app-loading-button class="detail-btn" (buttonClick)="editFoodLevel()" [buttonDisabled]="disableFoodEdit" [text]="'Edit food level'"></app-loading-button>
-			<app-loading-button class="detail-btn" (buttonClick)="editInterval()" [buttonDisabled]="disableIntervalEdit" [text]="'Edit activation interval'"></app-loading-button>
+			<app-loading-button class="detail-btn" (buttonClick)="openUpdate(true)" [buttonDisabled]="disableFoodEdit" [text]="'Edit food level'"></app-loading-button>
+			<app-loading-button class="detail-btn" (buttonClick)="openUpdate(false)" [buttonDisabled]="disableIntervalEdit" [text]="'Edit activation interval'"></app-loading-button>
 		</div>
+		<mat-accordion>
+			<mat-expansion-panel class="update-field" hideToggle #updatePanel>
+				<mat-expansion-panel-header class="expansion-header" #updatePanelHeader>
+				</mat-expansion-panel-header>
+				<div *ngIf="showFoodUpdate else intervalUpdate">
+					<mat-form-field>
+						<mat-label>Enter new {{updateString}}</mat-label>
+						<input matInput type="text" [(ngModel)]="editedFoodLevel">
+					</mat-form-field>
+					<app-loading-button class="detail-btn" (buttonClick)="updateFoodLevel()" [buttonDisabled]="disableFoodEdit" [text]="'Update'"></app-loading-button>
+				</div>
+				<ng-template #intervalUpdate>
+					<h3>Enter new {{updateString}}</h3>
+					<div class="time-input-container">
+						<mat-form-field class="time-input">
+							<mat-label>H</mat-label>
+							<input matInput type="number" min="0" [(ngModel)]="editedIntervalH">
+						</mat-form-field>
+						:
+						<mat-form-field class="time-input">
+							<mat-label>M</mat-label>
+							<input matInput type="number" max="60" min="0" [(ngModel)]="editedIntervalM">
+						</mat-form-field>
+						<app-loading-button class="detail-btn" [lessTopMargin]="true" (buttonClick)="updateInterval()" [buttonDisabled]="disableIntervalEdit" [text]="'Update'"></app-loading-button>
+					</div>
+				</ng-template>
+			</mat-expansion-panel>
+		</mat-accordion>
 	</mat-card-content>
 </mat-card>

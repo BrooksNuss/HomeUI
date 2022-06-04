@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { FeederInfo } from '../../models/FeederInfo';
 import { FeederUpdateRequest } from '../../models/FeederUpdateRequest';
 import { FeederService } from '../../services/feeder.service';
@@ -9,13 +10,18 @@ import { FeederService } from '../../services/feeder.service';
 	styleUrls: ['./feeder-detail.component.scss']
 })
 export class FeederDetailComponent implements OnInit {
+	@ViewChild('updatePanel') updatePanel: MatExpansionPanel;
+	@ViewChild('updatePanelHeader', {read: ElementRef}) updatePanelHeader: ElementRef;
 	@Input() selectedItem: FeederInfo;
 	disableFeed = false;
 	disableSkip = false;
 	disableFoodEdit = false;
 	disableIntervalEdit = false;
-	editedFoodLevel = 0;
-	editedInterval: Date;
+	editedFoodLevel: number;
+	editedIntervalH: number | null;
+	editedIntervalM: number | null;
+	showFoodUpdate: boolean;
+	updateString: string;
 
 	constructor(private feederService: FeederService) { }
 
@@ -33,29 +39,52 @@ export class FeederDetailComponent implements OnInit {
 
 	skipFeeder() {
 		this.disableSkip = true;
-		this.feederService.skipNextFeeding(this.selectedItem.id).subscribe(res => {
-			this.disableSkip = false;
-			console.log(res);
-		});
+		this.feederService.skipNextFeeding(this.selectedItem.id).subscribe({
+			next: res => console.log(res),
+			error: err => console.error(err),
+			complete: () => this.disableSkip = false
+		})
 	}
 
-	editFoodLevel() {
+	openUpdate(showFood: boolean) {
+		if (showFood === this.showFoodUpdate) {
+			this.updatePanelHeader.nativeElement.click();
+		}
+		this.showFoodUpdate = showFood;
+		if (showFood) {
+			this.updateString = 'food level';
+		} else {
+			this.updateString = 'activation interval';
+		}
+		this.updatePanel.open();
+	}
+
+	updateFoodLevel() {
 		this.disableFoodEdit = true;
 		const updateRequest: FeederUpdateRequest = {estRemainingFood: this.editedFoodLevel};
-		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe(res => {
-			this.disableFoodEdit = false;
-			this.editedFoodLevel = 0;
-			console.log(res);
+		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe({
+			next: (res) => {
+				this.updatePanel.close();
+				this.disableFoodEdit = false;
+				this.editedFoodLevel = 0;
+				console.log(res);
+			},
+			error: err => console.error(err)
 		});
 	}
 
-	editInterval() {
+	updateInterval() {
 		this.disableIntervalEdit = true;
-		const updateRequest: FeederUpdateRequest = {interval: this.editedInterval.getHours() + ':' + this.editedInterval.getMinutes() + ':' + this.editedInterval.getSeconds()};
-		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe(res => {
-			this.disableIntervalEdit = false;
-			this.editedInterval = new Date(this.selectedItem.interval);
-			console.log(res);
+		const updateRequest: FeederUpdateRequest = {interval: this.editedIntervalH + ':' + this.editedIntervalM};
+		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe({
+			next: res => {
+				this.updatePanel.close();
+				this.disableIntervalEdit = false;
+				this.editedIntervalH = null;
+				this.editedIntervalM = null;
+				console.log(res);
+			},
+			error: err => console.error(err)
 		});
 	}
 }

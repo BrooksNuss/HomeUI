@@ -35,6 +35,7 @@ import { FeederListItemComponent } from './home/feeder/feeder-list-item/feeder-l
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
 	declarations: [
@@ -74,7 +75,8 @@ import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
 		ReactiveFormsModule,
 		MatMenuModule,
 		MatCardModule,
-		HttpClientModule
+		HttpClientModule,
+		MatExpansionModule
 	],
 	providers: [
 		AuthService,
