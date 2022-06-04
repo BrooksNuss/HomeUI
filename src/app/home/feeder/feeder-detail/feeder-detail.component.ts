@@ -11,15 +11,13 @@ import { FeederService } from '../../services/feeder.service';
 })
 export class FeederDetailComponent implements OnInit {
 	@ViewChild('updatePanel') updatePanel: MatExpansionPanel;
-	@ViewChild('updatePanelHeader', {read: ElementRef}) updatePanelHeader: ElementRef;
 	@Input() selectedItem: FeederInfo;
 	disableFeed = false;
 	disableSkip = false;
-	disableFoodEdit = false;
-	disableIntervalEdit = false;
-	editedFoodLevel: number;
-	editedIntervalH: number | null;
-	editedIntervalM: number | null;
+	disableUpdate = false;
+	editedFoodLevel: string | null;
+	editedIntervalH: string | null;
+	editedIntervalM: string | null;
 	showFoodUpdate: boolean;
 	updateString: string;
 
@@ -47,8 +45,10 @@ export class FeederDetailComponent implements OnInit {
 	}
 
 	openUpdate(showFood: boolean) {
-		if (showFood === this.showFoodUpdate) {
-			this.updatePanelHeader.nativeElement.click();
+		if (showFood === this.showFoodUpdate && this.updatePanel.expanded) {
+			setTimeout(() => {
+				this.updatePanel.close();
+			}, 0);
 		}
 		this.showFoodUpdate = showFood;
 		if (showFood) {
@@ -60,31 +60,37 @@ export class FeederDetailComponent implements OnInit {
 	}
 
 	updateFoodLevel() {
-		this.disableFoodEdit = true;
-		const updateRequest: FeederUpdateRequest = {estRemainingFood: this.editedFoodLevel};
+		if (this.editedFoodLevel === null) {
+			return;
+		}
+		this.disableUpdate = true;
+		const updateRequest: FeederUpdateRequest = {estRemainingFood: parseInt(this.editedFoodLevel)};
 		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe({
 			next: (res) => {
 				this.updatePanel.close();
-				this.disableFoodEdit = false;
-				this.editedFoodLevel = 0;
+				this.editedFoodLevel = null;
 				console.log(res);
 			},
-			error: err => console.error(err)
+			error: err => console.error(err),
+			complete: () => this.disableUpdate = false
 		});
 	}
 
 	updateInterval() {
-		this.disableIntervalEdit = true;
-		const updateRequest: FeederUpdateRequest = {interval: this.editedIntervalH + ':' + this.editedIntervalM};
+		if (this.editedIntervalH === null && this.editedIntervalM === null) {
+			return;
+		}
+		this.disableUpdate = true;
+		const updateRequest: FeederUpdateRequest = {interval: (this.editedIntervalH ? this.editedIntervalH : 0) + ':' + (this.editedIntervalM ? this.editedIntervalM : '00')};
 		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe({
 			next: res => {
 				this.updatePanel.close();
-				this.disableIntervalEdit = false;
 				this.editedIntervalH = null;
 				this.editedIntervalM = null;
 				console.log(res);
 			},
-			error: err => console.error(err)
+			error: err => console.error(err),
+			complete: () => this.disableUpdate = false
 		});
 	}
 }
