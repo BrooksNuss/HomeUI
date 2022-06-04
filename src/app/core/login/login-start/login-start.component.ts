@@ -22,7 +22,7 @@ export class LoginStartComponent extends LoginModalStep implements OnInit {
 
 	async submitLogin(): Promise<void> {
 		this.loginButton.busy = true;
-		const loginError = await this.authService.signIn(this.username.value, this.password.value);
+		const loginError = await this.authService.signIn(this.username.value!, this.password.value!);
 		this.loginButton.busy = false;
 		if (loginError) {
 			this.handleError(loginError);

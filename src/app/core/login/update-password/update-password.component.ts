@@ -20,7 +20,7 @@ export class UpdatePasswordComponent extends LoginModalStep implements OnInit {
 	}
 
 	async submitUpdatePassword(): Promise<void> {
-		const result = await this.authService.updatePassword(this.password.value);
+		const result = await this.authService.updatePassword(this.password.value!);
 		if (result) {
 			this.handleError(result);
 		}
