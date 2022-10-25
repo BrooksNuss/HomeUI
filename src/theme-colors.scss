@@ -1,8 +1,8 @@
 @use '@angular/material' as mat;
 
-$theme-bg-dark: mat.get-color-from-palette(mat.$blue-grey-palette, 900);
-$theme-bg: mat.get-color-from-palette(mat.$blue-grey-palette, 800);
-$theme-bg-light: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+$theme-bg-dark: mat.get-color-from-palette(mat.$gray-palette, 50);
+$theme-bg: mat.get-color-from-palette(mat.$gray-palette, 300);
+$theme-bg-light: mat.get-color-from-palette(mat.$gray-palette, 400);
 
 $theme-accent-dark: mat.get-color-from-palette(mat.$light-blue-palette, A400);
 $theme-accent-light: mat.get-color-from-palette(mat.$light-blue-palette, A200);

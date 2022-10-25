@@ -1,5 +1,7 @@
 @use 'src/partials';
+@import 'src/theme-colors';
 
 .profile-button {
     box-shadow: none;
+	background-color: $theme-accent-dark;
 }
