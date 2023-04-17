@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { SidebarService } from './core/services/sidebar.service';
+import { WebsocketService } from './core/services/websocket.service';
 
 @Component({
 	selector: 'app-root',
@@ -31,12 +32,15 @@ export class AppComponent implements OnInit {
 	title = 'homeUi';
 	sidebarOpen = false;
 
-	constructor(private authService: AuthService) {}
+	constructor(private authService: AuthService, private websocketService: WebsocketService) {}
 
 	async ngOnInit(): Promise<void> {
 		await this.authService.initLoginStatus();
 		this.authService.isLoggedIn.subscribe(next => {
 			this.isLoggedIn = next;
+		});
+		this.websocketService.getMessageSubscription('global').subscribe(message => {
+			console.log('global message' + message);
 		});
 	}
 

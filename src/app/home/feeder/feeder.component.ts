@@ -1,46 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FeederInfo } from '../models/FeederInfo';
 import { FeederService } from '../services/feeder.service';
+import { WebsocketService } from 'src/app/core/services/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-feeder',
 	templateUrl: './feeder.component.html',
 	styleUrls: ['./feeder.component.scss']
 })
-export class FeederComponent implements OnInit {
-	feederInfos: FeederInfo[] = [
-		// {
-		// 	"id": "mainFeeder",
-		// 	"lastActive": "1645344276283",
-		// 	"interval": "12:00:00",
-		// 	"estRemainingFood": 50,
-		// 	"status": "OFFLINE",
-		// 	"estRemainingFeedings": 5,
-		// 	"name": "Main Feeder",
-		// 	"nextActive": "1645344276283"
-		// },
-		// {
-		// 	"id": "treatFeeder",
-		// 	"lastActive": "1645344276283",
-		// 	"interval": "12:00:00",
-		// 	"estRemainingFood": 80,
-		// 	"status": "OFFLINE",
-		// 	"estRemainingFeedings": 16,
-		// 	"name": "Treats Feeder",
-		// 	"nextActive": "1645344276283"
-		// },
-	];
+export class FeederComponent implements OnInit, OnDestroy {
+	feederInfos: FeederInfo[] = [];
 	selectedItem: FeederInfo;
+	wsSub: Subscription;
 
-	constructor(private feederService: FeederService) { }
+	constructor(private feederService: FeederService, private websocketService: WebsocketService) { }
 
 	ngOnInit(): void {
-		this.feederService.getFeederList().subscribe(res => {
-			this.feederInfos = res;
-		})
+		this.getFeederList();
+		this.subscribeFeederWebsocket();
+	}
+
+	ngOnDestroy(): void {
+		this.wsSub.unsubscribe();
 	}
 
 	selectItem(item: FeederInfo): void {
 		this.selectedItem = item;
+	}
+
+	getFeederList(): void {
+		this.feederService.getFeederList().subscribe(res => {
+			this.feederInfos = res;
+		});
+	}
+
+	subscribeFeederWebsocket(): void {
+		this.wsSub = this.websocketService.getMessageSubscription('feederUpdate').subscribe(message => {
+			this.getFeederList();
+		})
 	}
 }
