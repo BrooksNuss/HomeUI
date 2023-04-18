@@ -1,5 +1,5 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { SidebarService } from './core/services/sidebar.service';
@@ -27,24 +27,47 @@ import { WebsocketService } from './core/services/websocket.service';
 		]),
 	]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 	isLoggedIn: boolean = false;
 	title = 'homeUi';
 	sidebarOpen = false;
+	wsSub: Subscription;
 
 	constructor(private authService: AuthService, private websocketService: WebsocketService) {}
 
 	async ngOnInit(): Promise<void> {
 		await this.authService.initLoginStatus();
-		this.authService.isLoggedIn.subscribe(next => {
+		// Handle auth status changes
+		this.authService.isLoggedIn.subscribe(async next => {
 			this.isLoggedIn = next;
+			// Open/close websocket based on auth status
+			this.updateWebsocketState();
 		});
-		this.websocketService.getMessageSubscription('global').subscribe(message => {
-			console.log('global message' + message);
-		});
+	}
+
+	ngOnDestroy(): void {
+		this.wsSub.unsubscribe();
 	}
 
 	setSidebarOpen(value: boolean): void {
 		this.sidebarOpen = value;
+	}
+
+	async updateWebsocketState(): Promise<void> {
+		if (this.isLoggedIn) {
+			await this.websocketService.createWebsocketConnection();
+			try {
+				const subscription = await this.websocketService.getMessageSubscription('global')
+				if (subscription) {
+					this.wsSub = subscription.subscribe(message => {
+						console.log('global message' + message);
+					});
+				}
+			} catch (err) {
+				console.error(err);
+			}
+		} else {
+			this.websocketService.closeWebsocketConnection();
+		}
 	}
 }

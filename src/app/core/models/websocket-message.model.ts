@@ -1,6 +1,11 @@
-export interface WebsocketMessage<T extends WebsocketMessageType> {
-	subscriptionType: string,
-	value: T;
+export interface WebsocketSubscribeMessage<T extends WebsocketSubscriptionType> extends WebsocketMessage<T> {
+	value: WebsocketSubscriptionAction;
 }
 
-export type WebsocketMessageType = 'feederUpdate' | 'global';
+export interface WebsocketMessage<T extends WebsocketSubscriptionType> {
+	subscriptionType: T,
+	value: any
+}
+
+export type WebsocketSubscriptionType = 'feederUpdate' | 'global';
+export type WebsocketSubscriptionAction = 'subscribe' | 'unsubscribe';
