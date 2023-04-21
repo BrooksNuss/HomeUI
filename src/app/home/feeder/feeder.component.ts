@@ -36,6 +36,12 @@ export class FeederComponent implements OnInit, OnDestroy {
 	getFeederList(): void {
 		this.feederService.getFeederList().subscribe(res => {
 			this.feederInfos = res;
+			if (this.selectedItem) {
+				const currentItem = this.feederInfos.find(info => info.id === this.selectedItem.id);
+				if (currentItem) {
+					this.selectItem(currentItem);
+				}
+			}
 		});
 	}
 

@@ -15,11 +15,11 @@
 			width: 16px;
 			height: 16px;
 			
-			&.ACTIVE {
+			&.ONLINE {
 				background-color: green;
 			}
 			
-			&.INACTIVE {
+			&.OFFLINE {
 				background-color: red;
 			}
 		}

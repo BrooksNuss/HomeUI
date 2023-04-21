@@ -1,7 +1,7 @@
 export interface FeederUpdateRequest {
     id?: string;
     name?: string;
-    status?: 'ONLINE' | 'OFFLINE';
+    enabled?: boolean;
     interval?: string;
     estRemainingFood?: number;
 	description?: string;

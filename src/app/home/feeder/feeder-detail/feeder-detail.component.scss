@@ -7,8 +7,9 @@
 
 .feeder-detail {
 	min-width: 240px;
+	min-height: 50vh;
 	width: 30vw;
-	height: 50vh;
+	height: max-content;
 	display: flex;
 	flex-direction: column;
 	background-color: $theme-bg;
@@ -44,7 +45,7 @@
 
 			.time-input-container {
 				display: flex;
-				flex-direction: row;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
 				
@@ -68,6 +69,11 @@
 
 			.detail-text-value {
 				font-size: 14px;
+			}
+
+			.interval-container {
+				display: flex;
+				flex-direction: row;
 			}
 		}
 	}

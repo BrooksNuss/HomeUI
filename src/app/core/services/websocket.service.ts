@@ -28,7 +28,9 @@ export class WebsocketService {
 	}
 
 	public async closeWebsocketConnection(): Promise<void> {
-		this.wsSubject.complete();
+		if (this.wsSubject) {
+			this.wsSubject.complete();
+		}
 	}
 
 	public getMessageSubscription<T extends WebsocketSubscriptionType>(messageType: T): Observable<WebsocketMessage<T>> {

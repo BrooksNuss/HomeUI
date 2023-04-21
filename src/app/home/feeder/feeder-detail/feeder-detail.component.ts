@@ -11,7 +11,16 @@ import { FeederService } from '../../services/feeder.service';
 })
 export class FeederDetailComponent implements OnInit {
 	@ViewChild('updatePanel') updatePanel: MatExpansionPanel;
-	@Input() selectedItem: FeederInfo;
+	private _item: FeederInfo;
+	@Input() set selectedItem(item: FeederInfo) {
+		this._item = item;
+		if (item) {
+			this.parseInterval();
+		}
+	}
+	get selectedItem(): FeederInfo {
+		return this._item;
+	}
 	disableFeed = false;
 	disableSkip = false;
 	disableUpdate = false;
@@ -20,6 +29,7 @@ export class FeederDetailComponent implements OnInit {
 	editedIntervalM: string | null;
 	showFoodUpdate: boolean;
 	updateString: string;
+	formattedIntervals: string[];
 
 	constructor(private feederService: FeederService) { }
 
@@ -77,11 +87,13 @@ export class FeederDetailComponent implements OnInit {
 	}
 
 	updateInterval() {
-		if (this.editedIntervalH === null && this.editedIntervalM === null) {
+		if (this.editedIntervalH === null || this.editedIntervalM === null) {
 			return;
 		}
+		this.editedIntervalH = this.editedIntervalH.replace(/\s+/, '');
+		this.editedIntervalM = this.editedIntervalM.replace(/\s+/, '');
 		this.disableUpdate = true;
-		const updateRequest: FeederUpdateRequest = {interval: (this.editedIntervalH ? this.editedIntervalH : 0) + ':' + (this.editedIntervalM ? this.editedIntervalM : '00')};
+		const updateRequest: FeederUpdateRequest = {interval: (this.editedIntervalM ? this.editedIntervalM : '0') + ' ' + (this.editedIntervalH ? this.editedIntervalH : 0) + ' * * ? *'};
 		this.feederService.updateFeeder(this.selectedItem.id, updateRequest).subscribe({
 			next: res => {
 				this.updatePanel.close();
@@ -89,8 +101,28 @@ export class FeederDetailComponent implements OnInit {
 				this.editedIntervalM = null;
 				console.log(res);
 			},
-			error: err => console.error(err),
+			error: err => {
+				console.error(err)
+				this.disableUpdate = false;
+			},
 			complete: () => this.disableUpdate = false
 		});
+	}
+
+	parseInterval(): void {
+		const splitInterval = this.selectedItem.interval.split(' ');
+		const minutes = splitInterval[0];
+		const hours = splitInterval[1];
+		this.editedIntervalH = hours;
+		this.editedIntervalM = minutes;
+		const times: string[] = [];
+		const hoursSplit = hours.split(',');
+		const minutesSplit = minutes.split(',');
+		hoursSplit.forEach(hour => {
+			minutesSplit.forEach(minute => {
+				times.push(hour + ':' + (minute === '*' ? minute : minute.padStart(2, '0')));
+			})
+		});
+		this.formattedIntervals = times;
 	}
 }
