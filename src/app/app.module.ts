@@ -36,6 +36,7 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AudioSandboxComponent } from './home/audio-sandbox/audio-sandbox.component';
 
 @NgModule({
 	declarations: [
@@ -57,6 +58,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 		FeederListComponent,
 		FeederDetailComponent,
 		FeederListItemComponent,
+  AudioSandboxComponent,
 	],
 	imports: [
 		BrowserModule,
